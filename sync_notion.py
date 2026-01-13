@@ -2,7 +2,7 @@ import os
 import requests
 
 # Get variables from GitHub Secrets
-NOTION_TOKEN = os.getenv("notion_token")
+notion_token = os.getenv("notion_token")
 PAGE_ID = "2e765a5c0c2f80159213d93a58a276b7"   # extract code from copy link
 
 def fetch_notion_page():
