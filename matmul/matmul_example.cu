@@ -37,13 +37,14 @@ __global__ void matmul_gpu_naive(float* A, float* B, float* C, int M, int N, int
 // optimized CUDA kernel approach with shared memory tiling
 #define TILE 16
 __global__ void matmul_gpu_optimized(float* A, float* B, float* C, int M, int N, int K){
-  __shared__ float A_shared[TILE][TILE];
-  __shared__ float B_shared[TILE][TILE];
+  __shared__ float A_tile[TILE][TILE];
+  __shared__ float B_tile[TILE][TILE];
 
+  // row and column of the final matrix
   int row = threadIdx.y + blockIdx.y * blockDim.y;
   int col = threadIdx.x + blockIdx.x * blockDim.x;
 
-  float sum = 0.0f;
+  float sum = 0.f;
   int num_tiles = (K + TILE - 1) / TILE;
 
   for (int t = 0; t < num_tiles; t++){
